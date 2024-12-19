@@ -23,7 +23,7 @@
     </div>
     <div class="user">
       <el-dropdown placement="bottom" size="small">
-        <el-avatar size="medium" :src="baseUrl + info.avatar" />
+        <el-image fit="contain" :src="baseUrl + info.avatar" style="width: 35px; height: 35px;border-radius: 50%;" />
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
             <span class="userName" @click="handleSelect('/reception-personal')">{{ info.userName }}</span>
