@@ -3,7 +3,7 @@
  * @Author: zhaoqi
  * @Date: 2024-12-04 21:46:25
  * @LastEditors: zhaoqi
- * @LastEditTime: 2024-12-09 09:55:24
+ * @LastEditTime: 2024-12-19 15:04:26
 -->
 <template>
   <div class="header">
@@ -18,11 +18,21 @@
         :key="item.path"
         class="item"
         :style="{'color': path === item.path ? '#dd285f' : ''}"
-        @click="handleSelect(item)"
+        @click="handleSelect(item.path)"
       >{{ item.name }}</div>
     </div>
-    <div style="margin-right: 10px;cursor: pointer;" @click="handleSelect({ path: '/personal' })">
-      <el-avatar size="medium" :src="circleUrl" />
+    <div class="user">
+      <el-dropdown placement="bottom" size="small">
+        <el-avatar size="medium" :src="baseUrl + info.avatar" />
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>
+            <span class="userName" @click="handleSelect('/reception-personal')">{{ info.userName }}</span>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <span class="userName" @click="handleSelect('/change-password')">修改密码</span>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <el-button
       type="primary"
@@ -41,9 +51,23 @@ export default {
   props: ['path'],
   data() {
     return {
+      baseUrl: process.env.VUE_APP_HTTP_LOCATION,
       routePath: '',
-      menuList: [],
-      circleUrl: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+      info: {
+        avatar: '',
+        userName: ''
+      },
+      menuList: [
+        { name: '系统主页', path: '/home' },
+        { name: '景点门票', path: '/scenic' },
+        { name: '旅游线路', path: '/travel' },
+        { name: '景区酒店', path: '/tavern' },
+        { name: '旅游攻略', path: '/consult' },
+        { name: '我的收藏', path: '/collection' },
+        { name: '订单信息', path: '/reserve' },
+        { name: '退单信息', path: '/refund' },
+        { name: '评论信息', path: '/remark' }
+      ]
     }
   },
   mounted() {
@@ -51,34 +75,13 @@ export default {
   },
   methods: {
     async getLoginInfo() {
-      const { roles } = await store.dispatch('user/getInfo')
-      if (roles.includes('管理员')) {
-        this.menuList = [
-          { name: '系统主页', path: '/home' },
-          { name: '景点门票', path: '/scenic' },
-          { name: '旅游线路', path: '/travel' },
-          { name: '景区酒店', path: '/tavern' },
-          { name: '旅游咨询', path: '/consult' },
-          { name: '我的收藏', path: '/collection' },
-          { name: '我的预定', path: '/reserve' },
-          { name: '我的退单', path: '/refund' },
-          { name: '后台管理', path: '/homePage' }
-        ]
-      } else {
-        this.menuList = [
-          { name: '系统主页', path: '/home' },
-          { name: '景点门票', path: '/scenic' },
-          { name: '旅游线路', path: '/travel' },
-          { name: '景区酒店', path: '/tavern' },
-          { name: '旅游咨询', path: '/consult' },
-          { name: '我的收藏', path: '/collection' },
-          { name: '我的预定', path: '/reserve' },
-          { name: '我的退单', path: '/refund' }
-        ]
-      }
+      const res = await store.dispatch('user/getInfo')
+      this.info.avatar = res.avatar
+      this.info.userName = res.roles[0]
     },
     handleSelect(val) {
-      this.$router.push(val.path)
+      console.log('val: ', val)
+      this.$router.push(val)
     },
     async logout() {
       this.$confirm('确定要退出吗?', '提示', {
@@ -113,7 +116,7 @@ export default {
   justify-content: center;
   border-bottom: 1px solid #dddddd;
   .menu {
-    width: 100%;
+    flex: 1;
     height: 40px;
     display: flex;
     align-items: center;
@@ -128,6 +131,15 @@ export default {
         color: #dd285f;
         cursor: pointer;
       }
+    }
+  }
+  .user {
+    margin-top: 3px;
+    margin-right: 20px;
+    cursor: pointer;
+    .userName {
+      margin-left: 10px;
+      white-space: nowrap;
     }
   }
 }

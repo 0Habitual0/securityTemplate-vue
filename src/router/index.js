@@ -70,56 +70,70 @@ const receptionRoutes = [
     path: '/scenic',
     name: 'scenic',
     hidden: true,
-    component: () => import('@/views/reception/scenic/index.vue'),
+    component: () => import('@/views/reception/index.vue'),
     meta: { title: '景点信息' }
   },
   {
     path: '/travel',
     name: 'travel',
     hidden: true,
-    component: () => import('@/views/reception/travel/index.vue'),
+    component: () => import('@/views/reception/index.vue'),
     meta: { title: '旅游路线' }
   },
   {
     path: '/tavern',
     name: 'tavern',
     hidden: true,
-    component: () => import('@/views/reception/tavern/index.vue'),
+    component: () => import('@/views/reception/index.vue'),
     meta: { title: '景区酒店' }
   },
   {
     path: '/consult',
     name: 'consult',
-    component: () => import('@/views/reception/consult/index.vue'),
+    component: () => import('@/views/reception/index.vue'),
     meta: { title: '旅游咨询' }
   },
   {
     path: '/collection',
     name: 'collection',
     hidden: true,
-    component: () => import('@/views/reception/collection/index.vue'),
+    component: () => import('@/views/reception/index.vue'),
     meta: { title: '我的收藏' }
   },
   {
     path: '/reserve',
     name: 'reserve',
     hidden: true,
-    component: () => import('@/views/reception/reserve/index.vue'),
+    component: () => import('@/views/reception/index.vue'),
     meta: { title: '我的预定' }
   },
   {
     path: '/refund',
     name: 'refund',
     hidden: true,
-    component: () => import('@/views/reception/refund/index.vue'),
+    component: () => import('@/views/reception/index.vue'),
     meta: { title: '我的退单' }
   },
   {
-    path: '/personal',
-    name: 'personal',
+    path: '/remark',
+    name: 'remark',
     hidden: true,
-    component: () => import('@/views/reception/personal/index.vue'),
+    component: () => import('@/views/reception/index.vue'),
+    meta: { title: '评论信息' }
+  },
+  {
+    path: '/reception-personal',
+    name: 'reception-personal',
+    hidden: true,
+    component: () => import('@/views/user/personal.vue'),
     meta: { title: '个人中心' }
+  },
+  {
+    path: '/change-password',
+    name: 'change-password',
+    hidden: true,
+    component: () => import('@/views/user/update-password.vue'),
+    meta: { title: '修改密码' }
   }
 ]
 
@@ -136,7 +150,7 @@ export const asyncRoutes = [
         path: 'homePage',
         name: 'homePage',
         component: () => import('@/views/homePage/index'),
-        meta: { title: '首页', icon: 'dashboard' }
+        meta: { title: '首页', icon: 'el-icon-s-home' }
       }
     ]
   },
@@ -147,9 +161,9 @@ export const asyncRoutes = [
     children: [
       {
         path: '/place-interest',
-        name: '/place-interest',
-        component: () => import('@/views/place-interest/index'),
-        meta: { title: '景点管理', icon: 'dashboard' }
+        name: 'place-interest',
+        component: () => import('@/views/backend-page/index.vue'),
+        meta: { title: '景点门票管理', icon: 'el-icon-s-ticket' }
       }
     ]
   },
@@ -160,24 +174,23 @@ export const asyncRoutes = [
     children: [
       {
         path: '/itinerary',
-        name: '/itinerary',
-        component: () => import('@/views/itinerary/index'),
-        meta: { title: '线路管理', icon: 'dashboard' }
+        name: 'itinerary',
+        component: () => import('@/views/backend-page/index.vue'),
+        meta: { title: '旅游线路管理', icon: 'el-icon-s-promotion' }
       }
     ]
   },
   {
     path: '/hotel',
     component: Layout,
-    redirect: '/hotel/userPersonal',
+    redirect: '/hotel',
     name: 'hotel',
-    meta: { title: '酒店住宿', icon: 'table' },
     children: [
       {
-        path: 'hotelList',
+        path: '/hotelList',
         name: 'hotelList',
-        component: () => import('@/views/hotel/hotelManage.vue'),
-        meta: { title: '酒店住宿管理', icon: 'nested' }
+        component: () => import('@/views/backend-page/index.vue'),
+        meta: { title: '酒店住宿管理', icon: 'el-icon-office-building' }
       }
     ]
   },
@@ -189,45 +202,70 @@ export const asyncRoutes = [
       {
         path: '/information',
         name: '/information',
-        component: () => import('@/views/information/index'),
-        meta: { title: '资讯管理', icon: 'dashboard' }
+        component: () => import('@/views/backend-page/index.vue'),
+        meta: { title: '旅游攻略管理', icon: 'el-icon-tickets' }
       }
     ]
   },
   {
-    path: '/hotel-reservation',
+    path: '/my-collection',
     component: Layout,
-    redirect: '/hotel-reservation',
+    redirect: '/my-collection',
     children: [
       {
-        path: '/hotel-reservation',
-        name: '/hotel-reservation',
-        component: () => import('@/views/hotel-reservation/index'),
-        meta: { title: '酒店预约', icon: 'dashboard' }
+        path: '/my-collection',
+        name: 'my-collection',
+        component: () => import('@/views/collection/index.vue'),
+        meta: { title: '我的收藏', icon: 'el-icon-star-off' }
       }
     ]
   },
   {
-    path: '/user',
+    path: '/my-order',
     component: Layout,
-    redirect: '/user/userPersonal',
-    name: 'user',
-    meta: { title: '用户', icon: 'user' },
+    redirect: '/my-order',
     children: [
       {
-        path: 'personal',
-        name: 'personal',
-        component: () => import('@/views/user/personal.vue'),
-        meta: { title: '个人中心', icon: 'nested' }
-      },
+        path: '/my-order',
+        name: 'my-order',
+        component: () => import('@/views/backend-page/index.vue'),
+        meta: { title: '订单信息', icon: 'el-icon-s-order' }
+      }
+    ]
+  },
+  {
+    path: '/refund-order',
+    component: Layout,
+    redirect: '/refund-order',
+    children: [
       {
-        path: 'adminList',
-        name: 'adminList',
-        component: () => import('@/views/user/adminManage.vue'),
-        meta: { title: '管理员管理', icon: 'table', roles: ['管理员'] }
-      },
+        path: '/refund-order',
+        name: 'refund-order',
+        component: () => import('@/views/backend-page/index.vue'),
+        meta: { title: '退单信息', icon: 'el-icon-s-management' }
+      }
+    ]
+  },
+  {
+    path: '/comment',
+    component: Layout,
+    redirect: '/comment',
+    children: [
       {
-        path: 'userList',
+        path: '/comment',
+        name: 'comment',
+        component: () => import('@/views/backend-page/index.vue'),
+        meta: { title: '评论信息', icon: 'el-icon-s-comment' }
+      }
+    ]
+  },
+  {
+    path: '/userList',
+    component: Layout,
+    redirect: '/userList',
+    children: [
+      {
+        path: '/userList',
         name: 'userList',
         component: () => import('@/views/user/userManage.vue'),
         meta: { title: '用户管理', icon: 'table', roles: ['管理员'] }
@@ -235,31 +273,45 @@ export const asyncRoutes = [
     ]
   },
   {
-    path: '/scenicSpot',
+    path: '/user',
     component: Layout,
-    redirect: '/scenicSpot/userPersonal',
-    name: 'scenicSpot',
-    meta: { title: '景点门票', icon: 'table' },
+    redirect: '/user/userPersonal',
+    // hidden: true,
+    name: 'user',
+    meta: { title: '个人中心', icon: 'user' },
     children: [
       {
-        path: 'scenicSpotList',
-        name: 'scenicSpotList',
-        component: () => import('@/views/scenicSpot/scenicSpotManage.vue'),
-        meta: { title: '景点门票管理', icon: 'nested' }
+        path: '/personal',
+        name: 'personal',
+        component: () => import('@/views/user/personal.vue'),
+        meta: { title: '个人信息', icon: 'nested' }
+      },
+      {
+        path: '/adminList',
+        name: 'adminList',
+        hidden: true,
+        component: () => import('@/views/user/adminManage.vue'),
+        meta: { title: '管理员管理', icon: 'table', roles: ['管理员'] }
+      },
+      {
+        path: '/update-password',
+        name: 'update-password',
+        component: () => import('@/views/user/update-password.vue'),
+        meta: { title: '修改密码', icon: 'table' }
       }
     ]
   },
   {
     path: '/system',
     component: Layout,
-    redirect: '/system/userPersonal',
+    redirect: '/system/carouselImageList',
     name: 'system',
-    meta: { title: '系统管理', icon: 'table' },
+    meta: { title: '系统管理', icon: 'el-icon-setting' },
     children: [
       {
-        path: 'carouselImageList',
+        path: '/carouselImageList',
         name: 'carouselImageList',
-        component: () => import('@/views/carouselImage/carouselImageManage.vue'),
+        component: () => import('@/views/backend-page/index.vue'),
         meta: { title: '轮播图管理', icon: 'nested' }
       }
     ]

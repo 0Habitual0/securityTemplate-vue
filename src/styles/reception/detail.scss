@@ -1,3 +1,6 @@
+li {
+  list-style: none;
+}
 .detail {
   padding: 0 20px;
 }
@@ -36,6 +39,13 @@
       .opreate {
         display: flex;
         align-items: center;
+        .el-button {
+          // width: 40px;
+          height: 25px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
         i {
           cursor: pointer;
         }
@@ -95,9 +105,9 @@
   border-radius: 5px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
-.infinite-list {
+::v-deep .infinite-list {
   width: 100%;
-  max-height: 200px;
+  max-height: 300px;
   padding: 0;
   margin: 0;
   .infinite-list-item {
@@ -122,12 +132,17 @@
       display: flex;
     }
     .date {
+      display: flex;
+      align-items: center;
       margin-top: 5px;
-
       color: #a4a4a4;
     }
     .comment {
       margin-bottom: 5px;
+      .el-link--inner {
+        font-size: 12px;
+        white-space: nowrap;
+      }
     }
     .reply {
       padding-left: 50px;

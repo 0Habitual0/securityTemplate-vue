@@ -3,7 +3,7 @@
  * @Author: zhaoqi
  * @Date: 2024-12-04 16:31:56
  * @LastEditors: zhaoqi
- * @LastEditTime: 2024-12-07 16:51:27
+ * @LastEditTime: 2024-12-14 09:56:07
 -->
 <template>
   <div class="container">
@@ -14,28 +14,28 @@
         <i class="el-icon-s-data" />
         <div>
           <h3>门票预订总数</h3>
-          <p>100</p>
+          <p>{{ info.scenicSpotNum }}</p>
         </div>
       </div>
       <div class="item">
         <i class="el-icon-s-data" />
         <div>
-          <h3>客房预订总数</h3>
-          <p>100</p>
+          <h3>路线预订总数</h3>
+          <p>{{ info.touristRoutesNum }}</p>
         </div>
       </div>
       <div class="item">
         <i class="el-icon-s-data" />
         <div>
           <h3>有关订单总数</h3>
-          <p>100</p>
+          <p>{{ info.totalNum }}</p>
         </div>
       </div>
       <div class="item">
         <i class="el-icon-s-data" />
         <div>
-          <h3>线路订单总数</h3>
-          <p>100</p>
+          <h3>退单总数</h3>
+          <p>{{ info.backNum }}</p>
         </div>
       </div>
     </div>
@@ -48,26 +48,48 @@
 
 <script>
 import * as echarts from 'echarts'
+import service from '@/utils/request'
+import moment from 'moment'
 export default {
   name: 'HomePage',
   data() {
-    return {}
+    return {
+      info: {}
+    }
   },
   mounted() {
     this.getData()
   },
   methods: {
-    getData() {
+    async getData() {
       const o1 = {
         title: '近七日景点预约',
-        xData: ['2018-01', '2018-02', '2018-03', '2018-04'],
-        value: [100, 200, 300, 400]
+        xData: [],
+        value: []
       }
       const o2 = {
         title: '近七日酒店预约',
-        xData: ['2018-01', '2018-02', '2018-03', '2018-04'],
-        value: [300, 200, 600, 100]
+        xData: [],
+        value: []
       }
+      await service.get('/order/mainPage').then(res => {
+        if (res.data) {
+          console.log('res.data: ', res.data)
+          this.info = { ...res.data }
+          for (const key in res.data.scenicSpotWeek) {
+            o1.xData.push(moment(key).format('YYYY-MM-DD'))
+            o1.value.push(res.data.scenicSpotWeek[key])
+          }
+          for (const key in res.data.touristRoutesWeek) {
+            o2.xData.push(moment(key).format('YYYY-MM-DD'))
+            o2.value.push(res.data.touristRoutesWeek[key])
+          }
+        }
+        this.loading = false
+      }).catch(error => {
+        console.log('error: ', error)
+        this.loading = false
+      })
       this.initChart('travel', o1)
       this.initChart('hotel', o2)
     },

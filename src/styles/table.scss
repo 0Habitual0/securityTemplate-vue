@@ -4,6 +4,7 @@
   flex-wrap: wrap;
   width: 100%;
   padding: 1rem 0;
+  padding-right: 15px;
   margin-bottom: 1rem;
   background-color: #fff;
   .el-col {
@@ -31,6 +32,7 @@
     margin-right: 2rem;
   }
   .opreat-btn {
+    flex: 1;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -47,6 +49,14 @@
     justify-content: flex-end;
     margin-bottom: 1rem;
   }
+  .ellipsis {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* 限制显示的行数为1行 */
+    -webkit-box-orient: vertical;
+  }
   .opreat-button {
     display: flex;
     justify-content: space-between;
@@ -54,6 +64,9 @@
       margin-top: 0.1rem;
       margin-right: 0.2rem;
     }
+  }
+  .reply-content {
+    text-align: left;
   }
   // 分页
   .paging {
