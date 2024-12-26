@@ -1,7 +1,7 @@
 module.exports = {
 
   // title: 'springSecurity模板项目',
-  title: '旅游信息推荐系统',
+  title: '伊春市旅游管理系统',
 
   /**
    * @type {boolean} true | false

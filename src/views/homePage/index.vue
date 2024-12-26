@@ -7,7 +7,7 @@
 -->
 <template>
   <div class="container">
-    <div class="greet">欢迎使用旅游管理系统</div>
+    <div class="greet">欢迎使用伊春市旅游管理系统</div>
     <!-- 统计数量 -->
     <div class="statistic">
       <div class="item">
@@ -68,7 +68,7 @@ export default {
         value: []
       }
       const o2 = {
-        title: '近七日酒店预约',
+        title: '近七日旅游线路预约',
         xData: [],
         value: []
       }

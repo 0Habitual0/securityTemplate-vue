@@ -5,7 +5,7 @@
       <img :src="logo" width="200px" style="margin-top: 80px;">
       <!-- 标题 -->
       <div class="title-container">
-        <h3>欢迎使用旅游信息推荐系统</h3>
+        <h3>欢迎使用伊春市旅游管理系统</h3>
         <h5>珍藏每一刻的美好，旅行让生活变得更加有意义！</h5>
       </div>
 

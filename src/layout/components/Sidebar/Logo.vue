@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      title: '旅游信息推荐系统',
+      title: '伊春市旅游管理系统',
       logo: logoImg
     }
   }
